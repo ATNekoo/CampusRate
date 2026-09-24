@@ -1,0 +1,5 @@
+export enum PlaceStatusEnum {
+  ACTIVE = 'ACTIVE',
+  TEMPORARILY_CLOSED = 'TEMPORARILY_CLOSED',
+  INACTIVE = 'INACTIVE',
+}

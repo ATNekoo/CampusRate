@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { StorageModule } from './storage/storage.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { PlacesModule } from './places/places.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [StorageModule, ReviewsModule, PlacesModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }),StorageModule, ReviewsModule, PlacesModule],
   controllers: [AppController],
   providers: [AppService],
 })
