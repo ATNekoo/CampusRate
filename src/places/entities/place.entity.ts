@@ -12,6 +12,6 @@ export class Place {
   status: PlaceStatusEnum;
   averageRating: number | null;
   reviewCount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }

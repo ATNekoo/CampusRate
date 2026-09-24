@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { PlacesService } from './places.service';
 import { CreatePlaceDto } from './dtos/create-places.dto';
 import { UpdatePlaceDto } from './dtos/update-places.dto';
+import { QueryPlacesDto } from './dtos/query-places.dto';
 
 @Controller('places')
 export class PlacesController {
@@ -10,9 +11,9 @@ export class PlacesController {
     constructor(private readonly placesService: PlacesService) {}
 
     @Get()
-  findAll() {
-    return this.placesService.findAll();
-  }
+    findAll(@Query() query: QueryPlacesDto) {
+        return this.placesService.findAll(query);
+    }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -38,3 +39,5 @@ export class PlacesController {
     return this.placesService.remove(id);
   }
 }
+
+
