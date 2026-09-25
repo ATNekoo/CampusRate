@@ -4,9 +4,9 @@ import { PlacesController } from './places.controller';
 import { PlacesService } from './places.service';
 
 @Module({
-    imports: [StorageModule],
-    controllers: [PlacesController],
-    providers: [PlacesService],
-    exports: [PlacesService],
+  imports: [StorageModule],
+  controllers: [PlacesController],
+  providers: [PlacesService],
+  exports: [PlacesService],
 })
 export class PlacesModule {}

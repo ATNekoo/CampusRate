@@ -37,11 +37,13 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/places",
+          "raw": "{{baseUrl}}/api/v1/places",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places"
           ]
         },
@@ -66,11 +68,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/places/{{placeId}}",
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places",
             "{{placeId}}"
           ]
@@ -106,11 +110,13 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/places/{{placeId}}/reviews",
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}/reviews",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places",
             "{{placeId}}",
             "reviews"
@@ -136,11 +142,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/reviews/{{reviewId}}",
+          "raw": "{{baseUrl}}/api/v1/reviews/{{reviewId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "reviews",
             "{{reviewId}}"
           ]
@@ -175,11 +183,13 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/places/{{placeId}}",
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places",
             "{{placeId}}"
           ]
@@ -205,11 +215,13 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/places/{{placeId}}",
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places",
             "{{placeId}}"
           ]
@@ -235,11 +247,13 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/reviews/{{reviewId}}",
+          "raw": "{{baseUrl}}/api/v1/reviews/{{reviewId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "reviews",
             "{{reviewId}}"
           ]
@@ -275,11 +289,13 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/places/{{placeId}}/reviews",
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}/reviews",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places",
             "{{placeId}}",
             "reviews"
@@ -306,11 +322,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/places/not-an-id",
+          "raw": "{{baseUrl}}/api/v1/places/not-an-id",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places",
             "not-an-id"
           ]
@@ -336,11 +354,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/places?category=LIBRARY&page=1&limit=5",
+          "raw": "{{baseUrl}}/api/v1/places?category=LIBRARY&page=1&limit=5",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "api",
+            "v1",
             "places"
           ],
           "query": [

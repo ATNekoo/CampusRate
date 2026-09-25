@@ -6,8 +6,8 @@ import { ReviewsService } from './reviews.service';
 import { PlaceReviewsController } from './places-reviews.controller';
 
 @Module({
-    imports: [StorageModule, PlacesModule],
-    controllers: [PlaceReviewsController, ReviewsController],
-    providers: [ReviewsService],
+  imports: [StorageModule, PlacesModule],
+  controllers: [PlaceReviewsController, ReviewsController],
+  providers: [ReviewsService],
 })
 export class ReviewsModule {}

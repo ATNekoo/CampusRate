@@ -1,99 +1,189 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# CampusRate
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST permettant de consulter des endroits du campus et de publier des appréciations avec une note.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Démarrage
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+### 1. Installer les dépendances
 
 ```bash
-$ npm install
+npm ci
 ```
 
-## Compile and run the project
+### 2. Configurer l'environnement
+
+Créer un fichier `.env` à partir de `.env.example` et renseigner les variables nécessaires, notamment :
+
+```env
+PORT=3000
+DATA_FILE_PATH=./data/db.json
+```
+
+Le fichier `.env` ne doit pas être versionné.
+
+### 3. Démarrer l'application
+
+En développement :
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:dev
 ```
 
-## Run tests
+L'API est ensuite accessible sur :
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```text
+http://localhost:3000
 ```
 
-## Deployment
+### 4. Documentation Swagger
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Swagger UI est disponible à :
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
+```text
+http://localhost:3000/docs
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Swagger permet de consulter et tester les différentes routes de l'API.
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## Fonctionnalités
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+CampusRate permet de :
 
-## Support
+* créer, consulter et lister des `places`;
+* modifier et supprimer une `place`;
+* créer et lister les `reviews` d'une `place`;
+* consulter, modifier et supprimer une `review`;
+* filtrer les places par catégorie;
+* paginer les résultats;
+* calculer automatiquement la note moyenne et le nombre d'avis;
+* conserver les données dans un fichier JSON;
+* retourner les erreurs dans un format uniforme `Problem Details`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Les données sont conservées après le redémarrage de l'application grâce à la persistance JSON. Le TP exige également que l'accès au fichier utilise les API asynchrones de `node:fs/promises` et soit séparé de la logique métier.
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Technologies
 
-## License
+* NestJS
+* TypeScript
+* JSON
+* Swagger / OpenAPI
+* Postman
+* `class-validator`
+* `class-transformer`
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## Ressources principales
+
+### Place
+
+Une `place` représente un endroit ou un service du campus.
+
+Champs principaux :
+
+* `id`
+* `name`
+* `description`
+* `category`
+* `address`
+* `services`
+* `status`
+* `averageRating`
+* `reviewCount`
+* `createdAt`
+* `updatedAt`
+
+Les identifiants sont générés par le serveur. La note moyenne et le nombre d'avis sont également calculés par le serveur.
+
+### Review
+
+Une `review` représente une appréciation associée à une `place`.
+
+Champs principaux :
+
+* `id`
+* `placeId`
+* `authorName`
+* `rating`
+* `comment`
+* `createdAt`
+* `updatedAt`
+
+La note est comprise entre 1 et 5 et une review doit référencer une place existante.
+
+---
+
+## API
+
+Les principales opérations sont :
+
+| Méthode  | Ressource                  | Description                    |
+| -------- | -------------------------- | ------------------------------ |
+| `POST`   | `/places`                  | Créer une place                |
+| `GET`    | `/places`                  | Lister les places              |
+| `GET`    | `/places/:id`              | Consulter une place            |
+| `PATCH`  | `/places/:id`              | Modifier une place             |
+| `DELETE` | `/places/:id`              | Supprimer une place            |
+| `POST`   | `/places/:placeId/reviews` | Créer une review               |
+| `GET`    | `/places/:placeId/reviews` | Lister les reviews d'une place |
+| `GET`    | `/reviews/:id`             | Consulter une review           |
+| `PATCH`  | `/reviews/:id`             | Modifier une review            |
+| `DELETE` | `/reviews/:id`             | Supprimer une review           |
+
+La collection des places supporte notamment :
+
+```text
+?category=STUDY_SPACE
+?page=1
+?limit=10
+```
+
+Le filtre et la pagination peuvent être combinés.
+
+---
+
+## Structure
+
+```text
+src/
+├── common/
+│   ├── dtos/
+│   └── filters/
+├── places/
+│   ├── dtos/
+│   ├── entities/
+│   ├── enum/
+│   ├── places.controller.ts
+│   ├── places.service.ts
+│   └── places.module.ts
+├── reviews/
+│   ├── dtos/
+│   ├── entities/
+│   ├── places-reviews.controller.ts
+│   ├── places-reviews.service.ts
+│   ├── reviews.controller.ts
+│   ├── reviews.service.ts
+│   └── reviews.module.ts
+├── storage/
+│   ├── storage.module.ts
+│   └── storage.service.ts
+├── app.module.ts
+└── main.ts
+```
+
+Les contrôleurs, services, DTO, persistance et gestion globale des erreurs sont séparés conformément à l'organisation demandée par le TP.
+
+---
+
+## Limites connues
+
+* Les données sont stockées localement dans un fichier JSON.
+* L'API ne possède pas de système d'authentification.
+* La persistance est destinée à un contexte pédagogique et non à une utilisation en production.
+* Les scénarios manuels peuvent être exécutés avec Swagger UI ou Postman.
+
+Le TP demande également que Swagger/OpenAPI reflète fidèlement le comportement réel de l'API et que les scénarios de test couvrent les opérations principales, les erreurs, le filtrage, la pagination et la persistance après redémarrage.

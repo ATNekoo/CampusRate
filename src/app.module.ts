@@ -7,7 +7,12 @@ import { PlacesModule } from './places/places.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }),StorageModule, ReviewsModule, PlacesModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    StorageModule,
+    ReviewsModule,
+    PlacesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
