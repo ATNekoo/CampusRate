@@ -5,7 +5,7 @@ import { CreatePlaceDto } from './create-places.dto';
 
 
 export class UpdatePlaceDto extends PartialType(CreatePlaceDto) {
-  @IsOptional()
-  @IsEnum(PlaceStatusEnum)
-  status?: PlaceStatusEnum;
+    @IsOptional()
+    @IsEnum(PlaceStatusEnum)
+    status?: PlaceStatusEnum;
 }

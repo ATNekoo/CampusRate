@@ -15,29 +15,29 @@ export class PlacesController {
         return this.placesService.findAll(query);
     }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.placesService.findOneById(id);
-  }
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return this.placesService.findOneById(id);
+    }
 
 
-  @Post()
-  async create(@Body() dto: CreatePlaceDto, @Res({ passthrough: true }) res: Response) {
-    const place = await this.placesService.create(dto);
-    res.setHeader('Location', `/places/${place.id}`);
-    res.status(HttpStatus.CREATED);
-    return place;
-  }
+    @Post()
+    async create(@Body() dto: CreatePlaceDto, @Res({ passthrough: true }) res: Response) {
+        const place = await this.placesService.create(dto);
+        res.setHeader('Location', `/places/${place.id}`);
+        res.status(HttpStatus.CREATED);
+        return place;
+    }
 
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdatePlaceDto) {
-    return this.placesService.update(id, dto);
-  }
+    @Patch(':id')
+    async update(@Param('id') id: string, @Body() dto: UpdatePlaceDto) {
+        return this.placesService.update(id, dto);
+    }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.placesService.remove(id);
-  }
+    @Delete(':id')
+    async remove(@Param('id') id: string) {
+        return this.placesService.remove(id);
+    }
 }
 
 

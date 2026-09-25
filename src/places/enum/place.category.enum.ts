@@ -5,4 +5,5 @@ export enum PlaceCategoryEnum {
   SPORTS = 'SPORTS',
   STUDENT_SERVICE = 'STUDENT_SERVICE',
   COMPUTER_LAB = 'COMPUTER_LAB',
+  OTHER = 'OTHER'
 }

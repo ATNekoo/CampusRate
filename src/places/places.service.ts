@@ -12,23 +12,23 @@ export class PlacesService {
     constructor(private readonly storage: StorageService) {}
 
     async findAll(query: QueryPlacesDto) {
-          const db = await this.storage.readJSONFile();
-          const places = db.places as Place[];
+        const db = await this.storage.readJSONFile();
+        const places = db.places as Place[];
 
         const filtered = query.category? places.filter((p) => p.category === query.category): places;
 
-    const page = query.page ?? 1;
-    const limit = query.limit ?? 10;
-    const start = (page - 1) * limit;
-    const data = filtered.slice(start, start + limit);
+        const page = query.page ?? 1;
+        const limit = query.limit ?? 10;
+        const start = (page - 1) * limit;
+        const data = filtered.slice(start, start + limit);
 
-    return {
-        data,
-        pagination: {
-          page,
-          limit,
-          totalItems: filtered.length,
-          totalPages: Math.ceil(filtered.length / limit),
+        return {
+            data,
+            pagination: {
+            page,
+            limit,
+            totalItems: filtered.length,
+            totalPages: Math.ceil(filtered.length / limit),
     
             },
         };
