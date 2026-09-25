@@ -8,7 +8,7 @@ import { QueryPlacesDto } from './dtos/query-places.dto';
 @Controller('places')
 export class PlacesController {
 
-    constructor(private readonly placesService: PlacesService) {}
+    constructor(private readonly placesService: PlacesService, ) {}
 
     @Get()
     findAll(@Query() query: QueryPlacesDto) {

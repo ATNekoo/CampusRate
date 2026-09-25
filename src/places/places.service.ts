@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { StorageService } from '../storage/storage.service';
 import { Place } from './entities/place.entity';
@@ -86,11 +86,28 @@ export class PlacesService {
         const db = await this.storage.readJSONFile();
         const places = db.places as Place[];
         const place = places.find((p) => p.id === id);
-
         if (!place) {
             throw new NotFoundException(`Place with id "${id}" was not found.`);
         }
+
+        const reviews = db.reviews as { placeId: string }[];
+        const hasReviews = reviews.some((r) => r.placeId === id);
+        if (hasReviews) {
+          throw new ConflictException(`Place "${id}" cannot be deleted because it still has associated reviews.`);
+        }
+    
         db.places = places.filter((p) => p.id !== id);
+        await this.storage.writeJSONFile(db);
+    }
+
+    async patchStats(id: string, stats: { averageRating: number | null; reviewCount: number }): Promise<void> {
+        const db = await this.storage.readJSONFile();
+        const places = db.places as Place[];
+        const index = places.findIndex((p) => p.id === id);
+        if (index === -1) return;
+
+        places[index] = { ...places[index], ...stats };
+        db.places = places;
         await this.storage.writeJSONFile(db);
     }
 }
