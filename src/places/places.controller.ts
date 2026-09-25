@@ -4,7 +4,9 @@ import { PlacesService } from './places.service';
 import { CreatePlaceDto } from './dtos/create-places.dto';
 import { UpdatePlaceDto } from './dtos/update-places.dto';
 import { QueryPlacesDto } from './dtos/query-places.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Places')
 @Controller('places')
 export class PlacesController {
 
