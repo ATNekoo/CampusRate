@@ -1,0 +1,385 @@
+{
+  "info": {
+    "name": "CampusRate",
+    "description": "This collection contains requests for testing the CampusRate API. It includes requests for creating, retrieving, updating, and deleting places and reviews, as well as handling error scenarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "placeId", "value": "", "type": "string" },
+    { "key": "reviewId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Post place",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {\n    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\n});\n",
+              "pm.collectionVariables.set('placeId', pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\":\"Bibliothèque\", \n    \"description\":\"Espace calme avec prises.\",\n    \"category\":\"LIBRARY\",\"address\":\"Pavillon A\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "Get place w/ Id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {\n    pm.response.to.have.status(200);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places",
+            "{{placeId}}"
+          ]
+        },
+        "description": "PERSISTANCE : relance cette même requête après avoir redémarré le serveur (Ctrl+C puis npm start) pour confirmer que le place créé plus haut existe toujours après redémarrage."
+      },
+      "response": []
+    },
+    {
+      "name": "Post review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 201', function () {\n    pm.response.to.have.status(201);\n});",
+              "pm.collectionVariables.set('reviewId', pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"authorName\":\"Samira\",\r\n    \"rating\":4,\r\n    \"comment\":\"Calme et Wi-Fi stable.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}/reviews",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places",
+            "{{placeId}}",
+            "reviews"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get review w/ Id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {\n    pm.response.to.have.status(200);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reviews/{{reviewId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "reviews",
+            "{{reviewId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Patch place",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {\n    pm.response.to.have.status(200);\n});",
+              "pm.test('Status field was updated', function () {\n    pm.expect(pm.response.json().status).to.equal('INACTIVE');\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\t{\r\n        \"status\":\"INACTIVE\"\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places",
+            "{{placeId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete place invalide (409)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 409', function () {\n    pm.response.to.have.status(409);\n});",
+              "pm.test('Problem Details format', function () {\n    pm.expect(pm.response.json().status).to.equal(409);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places",
+            "{{placeId}}"
+          ]
+        },
+        "description": "Doit échouer avec 409 : la review créée plus haut existe toujours à ce point."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 204', function () {\n    pm.response.to.have.status(204);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reviews/{{reviewId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "reviews",
+            "{{reviewId}}"
+          ]
+        },
+        "description": "Suppression permise : aucune règle métier ne bloque la suppression d'une review."
+      },
+      "response": []
+    },
+    {
+      "name": "Post review invalide (400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 400', function () {\n    pm.response.to.have.status(400);\n});",
+              "pm.test('Problem Details format', function () {\n    const body = pm.response.json();\n    pm.expect(body).to.have.property('type');\n    pm.expect(body).to.have.property('status', 400);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"authorName\":\"X\",\r\n    \"rating\":9,\r\n    \"comment\":\"Test\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places/{{placeId}}/reviews",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places",
+            "{{placeId}}",
+            "reviews"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get place invalide (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 404', function () {\n    pm.response.to.have.status(404);\n});",
+              "pm.test('Problem Details format', function () {\n    pm.expect(pm.response.json().status).to.equal(404);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places/not-an-id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places",
+            "not-an-id"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get place avec pagination",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {\n    pm.response.to.have.status(200);\n});",
+              "pm.test('Response has data and pagination', function () {\n    const body = pm.response.json();\n    pm.expect(body).to.have.property('data');\n    pm.expect(body).to.have.property('pagination');\n    pm.expect(body.pagination.page).to.equal(1);\n    pm.expect(body.pagination.limit).to.equal(5);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/places?category=LIBRARY&page=1&limit=5",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "places"
+          ],
+          "query": [
+            {
+              "key": "category",
+              "value": "LIBRARY"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
