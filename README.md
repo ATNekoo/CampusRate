@@ -32,7 +32,7 @@ npm run start:dev
 L'API est ensuite accessible sur :
 
 ```text
-http://localhost:3000
+http://localhost:3000/api/v1/places
 ```
 
 ### 4. Documentation Swagger
@@ -164,7 +164,6 @@ src/
 │   ├── dtos/
 │   ├── entities/
 │   ├── places-reviews.controller.ts
-│   ├── places-reviews.service.ts
 │   ├── reviews.controller.ts
 │   ├── reviews.service.ts
 │   └── reviews.module.ts
