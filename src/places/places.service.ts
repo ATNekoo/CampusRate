@@ -1,6 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { StorageService } from '../storage/storage.service';
 import { PlaceStatusEnum } from './enum/place.status.enum';
 import { CreatePlaceDto } from './dtos/create-places.dto';
 import { UpdatePlaceDto } from './dtos/update-places.dto';
@@ -10,20 +13,23 @@ import { ReviewsRepository } from 'src/reviews/reviews.repository';
 import { Place } from './schemas/place.schema';
 import { FilterQuery } from 'mongoose';
 
-
-
-const EDITABLE_FIELDS = ['name', 'description', 'category', 'address', 'services', 'status'] as const;
-
+const EDITABLE_FIELDS = [
+  'name',
+  'description',
+  'category',
+  'address',
+  'services',
+  'status',
+] as const;
 
 @Injectable()
 export class PlacesService {
   constructor(
     private readonly placesRepository: PlacesRepository,
-    private readonly reviewsRepository: ReviewsRepository
+    private readonly reviewsRepository: ReviewsRepository,
   ) {}
 
   async findAll(query: QueryPlacesDto) {
-
     const page = query.page ?? 1;
     const limit = query.limit ?? 10;
 
@@ -47,7 +53,7 @@ export class PlacesService {
   }
 
   async findOneById(id: string): Promise<Place> {
-    const place = await this.placesRepository.findById(id)
+    const place = await this.placesRepository.findById(id);
     if (!place) {
       throw new NotFoundException(`Place with ID ${id} not found`);
     }
@@ -68,10 +74,13 @@ export class PlacesService {
 
   async update(id: string, dto: UpdatePlaceDto): Promise<Place> {
     const changes = Object.fromEntries(
-      EDITABLE_FIELDS.filter((field) => dto[field] !== undefined).map((field) => [field, dto[field]]),
+      EDITABLE_FIELDS.filter((field) => dto[field] !== undefined).map(
+        (field) => [field, dto[field]],
+      ),
     );
     const place = await this.placesRepository.updateById(id, changes);
-    if (!place) throw new NotFoundException(`Place with id "${id}" was not found.`);
+    if (!place)
+      throw new NotFoundException(`Place with id "${id}" was not found.`);
     return place;
   }
 
@@ -79,12 +88,17 @@ export class PlacesService {
     await this.findOneById(id);
 
     if ((await this.reviewsRepository.countByPlaceId(id)) > 0) {
-      throw new ConflictException(`Place "${id}" cannot be deleted because it still has associated reviews.`);
+      throw new ConflictException(
+        `Place "${id}" cannot be deleted because it still has associated reviews.`,
+      );
     }
     await this.placesRepository.deleteById(id);
   }
 
-  async patchStats(id: string, stats: { averageRating: number | null; reviewCount: number }): Promise<void> {
+  async patchStats(
+    id: string,
+    stats: { averageRating: number | null; reviewCount: number },
+  ): Promise<void> {
     await this.placesRepository.setStats(id, stats);
   }
 }

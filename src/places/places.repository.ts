@@ -5,14 +5,25 @@ import { Place } from './schemas/place.schema';
 
 @Injectable()
 export class PlacesRepository {
-  constructor(@InjectModel(Place.name) private readonly placeModel: Model<Place>) {}
+  constructor(
+    @InjectModel(Place.name) private readonly placeModel: Model<Place>,
+  ) {}
 
   async create(data: Partial<Place>): Promise<Place> {
     return this.placeModel.create(data);
   }
 
-  async findPage(filter: FilterQuery<Place>, skip: number, limit: number): Promise<Place[]> {
-    return this.placeModel.find(filter).sort({ createdAt: 1, _id: 1 }).skip(skip).limit(limit).exec();
+  async findPage(
+    filter: FilterQuery<Place>,
+    skip: number,
+    limit: number,
+  ): Promise<Place[]> {
+    return this.placeModel
+      .find(filter)
+      .sort({ createdAt: 1, _id: 1 })
+      .skip(skip)
+      .limit(limit)
+      .exec();
   }
 
   async count(filter: FilterQuery<Place>): Promise<number> {
@@ -25,7 +36,11 @@ export class PlacesRepository {
 
   async updateById(id: string, changes: Partial<Place>): Promise<Place | null> {
     return this.placeModel
-      .findByIdAndUpdate(id, { $set: changes }, { new: true, runValidators: true })
+      .findByIdAndUpdate(
+        id,
+        { $set: changes },
+        { new: true, runValidators: true },
+      )
       .exec();
   }
 
@@ -33,8 +48,13 @@ export class PlacesRepository {
     await this.placeModel.findByIdAndDelete(id).exec();
   }
 
-  async setStats(id: string, stats: { averageRating: number | null; reviewCount: number }): Promise<void> {
+  async setStats(
+    id: string,
+    stats: { averageRating: number | null; reviewCount: number },
+  ): Promise<void> {
     // timestamps: false, so recomputing stats doesn't touch updatedAt (same as TP1)
-    await this.placeModel.updateOne({ _id: id }, { $set: stats }, { timestamps: false }).exec();
+    await this.placeModel
+      .updateOne({ _id: id }, { $set: stats }, { timestamps: false })
+      .exec();
   }
 }

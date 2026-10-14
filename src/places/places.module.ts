@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { StorageModule } from '../storage/storage.module';
 import { PlacesController } from './places.controller';
 import { PlacesService } from './places.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -9,10 +8,12 @@ import { ReviewsRepository } from 'src/reviews/reviews.repository';
 import { PlacesRepository } from './places.repository';
 
 @Module({
-  imports: [MongooseModule.forFeature([
+  imports: [
+    MongooseModule.forFeature([
       { name: Place.name, schema: PlaceSchema },
       { name: Review.name, schema: ReviewSchema },
-    ]),],
+    ]),
+  ],
   controllers: [PlacesController],
   providers: [PlacesService, PlacesRepository, ReviewsRepository],
   exports: [PlacesService],

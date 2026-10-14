@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { StorageModule } from './storage/storage.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { PlacesModule } from './places/places.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -25,7 +24,6 @@ import { MongooseModule } from '@nestjs/mongoose';
         autoIndex: process.env.NODE_ENV !== 'production',
       }),
     }),
-    StorageModule,
     ReviewsModule,
     PlacesModule,
   ],

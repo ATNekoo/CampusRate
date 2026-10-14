@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { StorageService } from '../storage/storage.service';
 import { PlacesService } from '../places/places.service';
 import { ReviewsRepository } from './reviews.repository';
 import { Review } from './schemas/review.schema';
@@ -22,7 +21,7 @@ export class ReviewsService {
       placeId,
       authorName: dto.authorName,
       rating: dto.rating,
-      comment: dto.comment
+      comment: dto.comment,
     });
     await this.recomputePlaceStats(placeId);
     return review;
@@ -66,7 +65,7 @@ export class ReviewsService {
   private async recomputePlaceStats(placeId: string): Promise<void> {
     const stats = await this.reviewsRepository.aggregateStats(placeId);
     await this.placesService.patchStats(placeId, {
-      averageRating : stats ? Math.round(stats.average * 100 ) / 100 : null,
+      averageRating: stats ? Math.round(stats.average * 100) / 100 : null,
       reviewCount: stats ? stats.count : 0,
     });
   }
