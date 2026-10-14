@@ -16,17 +16,20 @@ export class QueryPlacesDto {
   @ApiPropertyOptional({
     description: 'The page number for pagination (default: 1)',
     example: 1,
+    minimum: 1,
     maximum: 30,
   })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
+  @Max(30)
   page?: number = 1;
 
   @ApiPropertyOptional({
     description: 'The number of items per page for pagination (default: 10)',
     example: 10,
+    minimum: 1,
     maximum: 30,
   })
   @IsOptional()

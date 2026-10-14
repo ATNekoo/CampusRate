@@ -18,16 +18,16 @@ export class Place extends Document<string> {
   @Prop({ type: String })
   declare _id: string;
 
-  @Prop({ required: true, trim: true })
+  @Prop({ required: true, trim: true, minlength: 3, maxlength: 120 })
   name!: string;
 
-  @Prop({ required: true, trim: true })
+  @Prop({ required: true, trim: true, minlength: 10, maxlength: 500 })
   description!: string;
 
   @Prop({ required: true, enum: Object.values(PlaceCategoryEnum), index: true })
   category!: PlaceCategoryEnum;
 
-  @Prop({ required: true, trim: true })
+  @Prop({ required: true, trim: true, minlength: 3, maxlength: 200 })
   address!: string;
 
   @Prop({ type: [String], default: [] })
@@ -50,3 +50,4 @@ export class Place extends Document<string> {
 }
 
 export const PlaceSchema = SchemaFactory.createForClass(Place);
+PlaceSchema.index({ name: 1, address: 1 }, { unique: true });

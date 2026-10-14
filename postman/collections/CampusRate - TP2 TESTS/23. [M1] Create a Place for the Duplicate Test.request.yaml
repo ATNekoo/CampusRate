@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/places"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Dup test",
+      "description": "Duplicate test place.",
+      "category": "LIBRARY",
+      "address": "Dup address"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', function () {
+          pm.response.to.have.status(201);
+      });
+      pm.collectionVariables.set('dupId', pm.response.json().id);
+    language: text/javascript
+order: 23000

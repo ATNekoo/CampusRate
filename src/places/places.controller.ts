@@ -16,7 +16,16 @@ import { PlacesService } from './places.service';
 import { CreatePlaceDto } from './dtos/create-places.dto';
 import { UpdatePlaceDto } from './dtos/update-places.dto';
 import { QueryPlacesDto } from './dtos/query-places.dto';
-import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ProblemDetails } from '../common/dtos/problem-details.dto';
 
 @ApiTags('Places')
@@ -25,27 +34,30 @@ export class PlacesController {
   constructor(private readonly placesService: PlacesService) {}
 
   @Get()
-  @ApiOperation({ 
-    summary: 'List places (filterable by category, paginated)' 
+  @ApiOperation({
+    summary: 'List places (filterable by category, paginated)',
   })
-  @ApiOkResponse({ 
-    description: 'Paginated list: { data, pagination }. An empty list is a 200, not an error.' 
+  @ApiOkResponse({
+    description:
+      'Paginated list: { data, pagination }. An empty list is a 200, not an error.',
   })
-  @ApiBadRequestResponse({ 
-    description: 'Invalid category, page or limit.', type: ProblemDetails
+  @ApiBadRequestResponse({
+    description: 'Invalid category, page or limit.',
+    type: ProblemDetails,
   })
   findAll(@Query() query: QueryPlacesDto) {
     return this.placesService.findAll(query);
   }
 
-  @ApiOperation({ 
-    summary: 'Get a place by id' 
+  @ApiOperation({
+    summary: 'Get a place by id',
   })
-  @ApiOkResponse({ 
-    description: 'The place.' 
+  @ApiOkResponse({
+    description: 'The place.',
   })
-  @ApiNotFoundResponse({ 
-    description: 'No place has this id.', type: ProblemDetails 
+  @ApiNotFoundResponse({
+    description: 'No place has this id.',
+    type: ProblemDetails,
   })
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -53,14 +65,15 @@ export class PlacesController {
   }
 
   @Post()
-  @ApiOperation({ 
-    summary: 'Create a place' 
+  @ApiOperation({
+    summary: 'Create a place',
   })
-  @ApiCreatedResponse({ 
-    description: 'Place created. The Location header holds its URI.' 
+  @ApiCreatedResponse({
+    description: 'Place created. The Location header holds its URI.',
   })
   @ApiBadRequestResponse({
-    description: 'Missing required property, invalid value, or unknown/forbidden property.',
+    description:
+      'Missing required property, invalid value, or unknown/forbidden property.',
     type: ProblemDetails,
   })
   async create(
@@ -68,19 +81,24 @@ export class PlacesController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const place = await this.placesService.create(dto);
-    res.setHeader('Location', `api/v1/places/${place.id}`);
+    res.setHeader('Location', `/api/v1/places/${place.id}`);
     res.status(HttpStatus.CREATED);
     return place;
   }
 
-  @ApiOperation({ 
-    summary: 'Partially update a place' 
+  @ApiOperation({
+    summary: 'Partially update a place',
   })
-  @ApiOkResponse({ 
-    description: 'The updated place.'
+  @ApiOkResponse({
+    description: 'The updated place.',
   })
   @ApiBadRequestResponse({
-    description: 'Invalid value, or a server-controlled / unknown property was sent.',
+    description:
+      'Invalid value, null value, or a server-controlled / unknown property was sent.',
+    type: ProblemDetails,
+  })
+  @ApiNotFoundResponse({
+    description: 'No place has this id.',
     type: ProblemDetails,
   })
   @Patch(':id')
@@ -89,17 +107,19 @@ export class PlacesController {
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ 
-    summary: 'Delete a place (refused while it has reviews)'
+  @ApiOperation({
+    summary: 'Delete a place (refused while it has reviews)',
   })
-  @ApiNoContentResponse({ 
-    description: 'Place deleted.' 
+  @ApiNoContentResponse({
+    description: 'Place deleted.',
   })
-  @ApiNotFoundResponse({ 
-    description: 'No place has this id.', type: ProblemDetails 
+  @ApiNotFoundResponse({
+    description: 'No place has this id.',
+    type: ProblemDetails,
   })
-  @ApiConflictResponse({ 
-    description: 'The place still has reviews.', type: ProblemDetails 
+  @ApiConflictResponse({
+    description: 'The place still has reviews.',
+    type: ProblemDetails,
   })
   @Delete(':id')
   async remove(@Param('id') id: string) {

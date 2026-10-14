@@ -3,8 +3,8 @@ import { PlacesController } from './places.controller';
 import { PlacesService } from './places.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Place, PlaceSchema } from './schemas/place.schema';
-import { Review, ReviewSchema } from 'src/reviews/schemas/review.schema';
-import { ReviewsRepository } from 'src/reviews/reviews.repository';
+import { Review, ReviewSchema } from '../reviews/schemas/review.schema';
+import { ReviewsRepository } from '../reviews/reviews.repository';
 import { PlacesRepository } from './places.repository';
 
 @Module({

@@ -68,6 +68,17 @@ export class ProblemDetailsFilter implements ExceptionFilter {
       type = 'https://campusrate.example/errors/service-unavailable';
       detail =
         'The service is temporarily unavailable. Please try again later.';
+    } else if (
+      exception instanceof Error &&
+      ['ValidationError', 'CastError'].includes(exception.name)
+    ) {
+      status = HttpStatus.BAD_REQUEST;
+      title = 'Validation failed';
+      type = 'https://campusrate.example/errors/validation-failed';
+      detail = 'The request contains invalid data.';
+    }
+    if (status >= 500) {
+      console.error(exception);
     }
 
     const problem: ProblemDetails = {

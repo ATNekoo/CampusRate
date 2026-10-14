@@ -19,13 +19,13 @@ export class Review extends Document<string> {
   @Prop({ required: true, index: true })
   placeId!: string;
 
-  @Prop({ required: true, trim: true })
+  @Prop({ required: true, trim: true, minlength: 2, maxlength: 80 })
   authorName!: string;
 
   @Prop({ required: true, min: 1, max: 5 })
   rating!: number;
 
-  @Prop({ required: true, trim: true })
+  @Prop({ required: true, trim: true, minlength: 5, maxlength: 300 })
   comment!: string;
 
   createdAt!: Date;

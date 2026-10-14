@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -9,7 +10,7 @@ import { CreatePlaceDto } from './dtos/create-places.dto';
 import { UpdatePlaceDto } from './dtos/update-places.dto';
 import { QueryPlacesDto } from './dtos/query-places.dto';
 import { PlacesRepository } from './places.repository';
-import { ReviewsRepository } from 'src/reviews/reviews.repository';
+import { ReviewsRepository } from '../reviews/reviews.repository';
 import { Place } from './schemas/place.schema';
 import { FilterQuery } from 'mongoose';
 
@@ -78,6 +79,9 @@ export class PlacesService {
         (field) => [field, dto[field]],
       ),
     );
+    if (Object.values(changes).includes(null)) {
+      throw new BadRequestException('null values are not allowed.');
+    }
     const place = await this.placesRepository.updateById(id, changes);
     if (!place)
       throw new NotFoundException(`Place with id "${id}" was not found.`);

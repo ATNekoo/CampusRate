@@ -1,25 +1,26 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class ProblemDetails {
-  @ApiProperty({ example: 'https://campusrate.example/errors/not-found' })
+  @ApiProperty({
+    example: 'https://campusrate.example/errors/validation-failed',
+  })
   type!: string;
 
-  @ApiProperty({ example: 'https://campusrate.example/errors/not-found' })
+  @ApiProperty({ example: 'Validation failed' })
   title!: string;
 
-  @ApiProperty({ example: 404 })
+  @ApiProperty({ example: 400 })
   status!: number;
 
-  @ApiProperty({ example: 'Place with ID plc_ABC123 not found' })
+  @ApiProperty({ example: 'The request contains invalid data.' })
   detail!: string;
 
-  @ApiProperty({ example: '/api/v1/places/plc_ABC123' })
+  @ApiProperty({ example: '/api/v1/places' })
   instance!: string;
-  
+
   @ApiPropertyOptional({
     type: [String],
     example: ['name must be longer than or equal to 3 characters'],
   })
   errors?: string[];
 }
-

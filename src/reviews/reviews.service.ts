@@ -44,7 +44,7 @@ export class ReviewsService {
     if (dto.rating !== undefined) changes.rating = dto.rating;
     if (dto.comment !== undefined) changes.comment = dto.comment;
 
-    const review = await this.reviewsRepository.findById(id);
+    const review = await this.reviewsRepository.updateById(id, changes);
     if (!review) {
       throw new NotFoundException(`Review with id "${id}" was not found.`);
     }
@@ -59,6 +59,7 @@ export class ReviewsService {
       throw new NotFoundException(`Review with id "${id}" was not found.`);
     }
 
+    await this.reviewsRepository.deleteById(id);
     await this.recomputePlaceStats(review.placeId);
   }
 

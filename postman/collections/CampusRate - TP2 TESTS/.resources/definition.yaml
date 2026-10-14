@@ -1,0 +1,9 @@
+$kind: collection
+description: Manual test scenarios for the CampusRate API. Run in order. Step 3 needs an API restart.
+variables:
+  baseUrl: http://localhost:3000/api/v1
+  allowedOrigin: http://localhost:5173
+  placeId: ""
+  reviewId: ""
+  reviewId2: ""
+  dupId: ""

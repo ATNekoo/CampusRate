@@ -1,0 +1,13 @@
+# Use this workspace to collaborate
+workspace:
+  id: 789fd06a-eb1d-458d-92f0-6e507e9cb346
+
+localResources:
+  collections:
+    - ../postman
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/CampusRate - TP2 TESTS: 4fdcabe4-5d7f-4a2e-b353-da3a3349e1c0

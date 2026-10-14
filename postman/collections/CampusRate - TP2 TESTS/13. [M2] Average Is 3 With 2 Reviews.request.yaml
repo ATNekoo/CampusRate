@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/places/{{placeId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      const body = pm.response.json();
+      pm.test('averageRating is 3 and reviewCount is 2', function () {
+          pm.expect(body.averageRating).to.equal(3);
+          pm.expect(body.reviewCount).to.equal(2);
+      });
+    language: text/javascript
+order: 13000
