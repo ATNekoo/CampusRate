@@ -15,6 +15,7 @@ export class CreatePlaceDto {
   @ApiProperty({
     description: 'The name of the place',
     example: 'Library',
+    minLength: 3,
     maxLength: 120,
   })
   @IsString()
@@ -25,6 +26,7 @@ export class CreatePlaceDto {
   @ApiProperty({
     description: 'Brief description of the place',
     example: 'Huge library with many books.',
+    minLength: 10,
     maxLength: 100,
   })
   @IsString()
@@ -43,6 +45,7 @@ export class CreatePlaceDto {
   @ApiProperty({
     description: 'The address of the place',
     example: 'Building S, local S021, Cegep Marie-Victorin',
+    minLength: 3,
     maxLength: 100,
   })
   @IsString()

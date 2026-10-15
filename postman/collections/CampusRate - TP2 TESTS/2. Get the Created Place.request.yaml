@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/places/{{placeId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('Returned id matches the saved id', function () {
+          pm.expect(pm.response.json().id).to.equal(pm.variables.get('placeId'));
+      });
+    language: text/javascript
+order: 2000

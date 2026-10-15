@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/places/{{placeId}}/reviews"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "authorName": "Neko",
+      "rating": 3,
+      "comment": "Great place to study"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', function () {
+          pm.response.to.have.status(201);
+      });
+      pm.collectionVariables.set('reviewId2', pm.response.json().id);
+    language: text/javascript
+order: 10000

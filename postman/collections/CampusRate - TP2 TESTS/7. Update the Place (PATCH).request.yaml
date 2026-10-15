@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/places/{{placeId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "description": "Updated description."
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('Description was updated', function () {
+          pm.expect(pm.response.json().description).to.equal('Updated description.');
+      });
+    language: text/javascript
+order: 7000

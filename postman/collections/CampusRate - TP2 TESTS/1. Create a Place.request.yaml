@@ -1,0 +1,34 @@
+$kind: http-request
+url: "{{baseUrl}}/places"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Library {{$timestamp}}",
+      "description": "Huge library with many books.",
+      "category": "LIBRARY",
+      "address": "Building S, local S021, Cegep Marie-Victorin"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', function () {
+          pm.response.to.have.status(201);
+      });
+      const body = pm.response.json();
+      pm.test('Location header is present', function () {
+          pm.response.to.have.header('Location');
+      });
+      pm.test('Id has the plc_ format', function () {
+          pm.expect(body.id).to.match(/^plc_[0-9A-F]{10}$/);
+      });
+      pm.test('averageRating is null and reviewCount is 0', function () {
+          pm.expect(body.averageRating).to.equal(null);
+          pm.expect(body.reviewCount).to.equal(0);
+      });
+      pm.collectionVariables.set('placeId', body.id);
+    language: text/javascript
+order: 1000

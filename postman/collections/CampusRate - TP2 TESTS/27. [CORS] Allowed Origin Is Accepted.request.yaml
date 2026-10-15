@@ -1,0 +1,17 @@
+$kind: http-request
+description: 'If Postman refuses the Origin header, use: curl.exe -i -H "Origin: http://localhost:5173" <url>'
+url: "{{baseUrl}}/places"
+method: GET
+headers:
+  Origin: "{{allowedOrigin}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('Allowed origin is returned', function () {
+          pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.equal(pm.variables.get('allowedOrigin'));
+      });
+    language: text/javascript
+order: 27000
